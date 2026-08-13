@@ -1,4 +1,3 @@
-// src/test/java/com/supportdesk/infrastructure/security/JwtAuthenticationFilterTest.java
 package com.supportdesk.infrastructure.security;
 
 import com.supportdesk.infrastructure.persistence.entity.CommentEntity;

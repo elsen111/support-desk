@@ -1,4 +1,3 @@
-// infrastructure/security/CustomUserDetails.java
 package com.supportdesk.infrastructure.security;
 
 import com.supportdesk.infrastructure.persistence.entity.UserEntity;

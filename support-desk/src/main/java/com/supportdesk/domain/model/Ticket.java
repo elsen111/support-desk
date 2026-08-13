@@ -21,7 +21,7 @@ public final class Ticket {
     private TicketPriority priority;
     private TicketStatus status;
     private final UUID requesterId;
-    private UUID assignedAgentId; // nullable
+    private UUID assignedAgentId;
     private final List<Comment> comments = new ArrayList<>();
     private final Instant createdAt;
     private Instant updatedAt;

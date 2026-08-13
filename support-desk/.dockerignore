@@ -1,0 +1,14 @@
+# .dockerignore
+.git
+.gitignore
+.gradle
+build
+out
+*.iml
+.idea
+.vscode
+Dockerfile
+docker-compose.yml
+README.md
+*.md
+.env

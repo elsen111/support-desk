@@ -1,4 +1,3 @@
-// infrastructure/persistence/adapter/TicketRepositoryAdapter.java
 package com.supportdesk.infrastructure.persistence.adapter;
 
 import com.supportdesk.application.port.out.TicketRepositoryPort;

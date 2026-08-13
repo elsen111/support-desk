@@ -1,4 +1,3 @@
-// web/controller/TicketController.java  (updated)
 package com.supportdesk.web.controller;
 
 import com.supportdesk.application.command.*;
@@ -16,6 +15,7 @@ import com.supportdesk.web.dto.response.TicketResponse;
 import com.supportdesk.web.mapper.TicketWebMapper;
 import com.supportdesk.web.support.ActorResolver;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/tickets")
 @Tag(name = "Tickets", description = "Ticket creation, assignment, status transitions and queries")
+@SecurityRequirement(name = "bearerAuth")
 public class TicketController {
 
     private final CreateTicketUseCase createTicketUseCase;
@@ -57,7 +58,9 @@ public class TicketController {
         Ticket ticket = createTicketUseCase.createTicket(new CreateTicketCommand(
                 actor, request.title(), request.description(), TicketPriority.valueOf(request.priority())
         ));
-        return ResponseEntity.status(201).body(ApiResponse.success(TicketWebMapper.toResponse(ticket)));
+        return ResponseEntity.status(201).body(ApiResponse.success(TicketWebMapper.toResponse(ticket),
+                "Ticket has been successfully created."))
+        ;
     }
 
     @GetMapping("/{ticketId}")
@@ -66,7 +69,8 @@ public class TicketController {
                                                            @PathVariable UUID ticketId) {
         Actor actor = actorResolver.resolve(principal);
         Ticket ticket = ticketQueryUseCase.getTicket(actor, ticketId);
-        return ResponseEntity.ok(ApiResponse.success(TicketWebMapper.toResponse(ticket)));
+        return ResponseEntity.ok(ApiResponse.success(TicketWebMapper.toResponse(ticket),
+                "Ticket has been successfully retrieved."));
     }
 
     @GetMapping
@@ -76,7 +80,7 @@ public class TicketController {
         List<TicketResponse> tickets = ticketQueryUseCase.listTicketsForActor(actor).stream()
                 .map(TicketWebMapper::toResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(ApiResponse.success(tickets));
+        return ResponseEntity.ok(ApiResponse.success(tickets, "Tickets has been successfully retrieved."));
     }
 
     @PostMapping("/{ticketId}/assign")

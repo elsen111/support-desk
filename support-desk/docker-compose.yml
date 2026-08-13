@@ -1,0 +1,45 @@
+# docker-compose.yml
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: supportdesk-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: support-desk
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - supportdesk-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d support-desk"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: supportdesk-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: jdbc:postgresql://db:5432/support-desk
+      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-long-random-secret-in-production-min-32-chars}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/v3/api-docs"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  supportdesk-db-data:

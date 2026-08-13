@@ -1,4 +1,3 @@
-// application/service/AssignTicketService.java  (updated with logging)
 package com.supportdesk.application.service;
 
 import com.supportdesk.application.command.AssignTicketCommand;

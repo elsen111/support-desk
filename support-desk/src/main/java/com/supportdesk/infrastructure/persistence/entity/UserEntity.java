@@ -1,8 +1,9 @@
-// infrastructure/persistence/entity/UserEntity.java
 package com.supportdesk.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +23,9 @@ public class UserEntity {
     @Column(nullable = false, length = 20)
     private CommentEntity.RoleJpa role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<RefreshTokenEntity> refreshTokens = new ArrayList<>();
+
     protected UserEntity() {
     }
 
@@ -40,4 +44,6 @@ public class UserEntity {
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
     public CommentEntity.RoleJpa getRole() { return role; }
     public void setRole(CommentEntity.RoleJpa role) { this.role = role; }
+    public List<RefreshTokenEntity> getRefreshTokens() { return refreshTokens; }
+    public void setRefreshTokens(List<RefreshTokenEntity> refreshTokens) { this.refreshTokens = refreshTokens; }
 }

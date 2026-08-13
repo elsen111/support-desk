@@ -1,4 +1,3 @@
-// infrastructure/persistence/entity/CommentEntity.java
 package com.supportdesk.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
@@ -31,7 +30,6 @@ public class CommentEntity {
     private Instant createdAt;
 
     protected CommentEntity() {
-        // JPA
     }
 
     public CommentEntity(UUID id, TicketEntity ticket, UUID authorId, RoleJpa authorRole, String content, Instant createdAt) {

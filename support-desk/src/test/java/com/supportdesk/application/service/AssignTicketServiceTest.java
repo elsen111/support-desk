@@ -1,4 +1,3 @@
-// src/test/java/com/supportdesk/application/service/AssignTicketServiceTest.java
 package com.supportdesk.application.service;
 
 import com.supportdesk.application.command.AssignTicketCommand;

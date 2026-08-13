@@ -1,4 +1,3 @@
-// infrastructure/security/CustomUserDetailsService.java
 package com.supportdesk.infrastructure.security;
 
 import com.supportdesk.infrastructure.persistence.repository.UserJpaRepository;

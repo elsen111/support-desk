@@ -1,5 +1,3 @@
--- src/main/resources/db/migration/V1__init_schema.sql
-
 CREATE TABLE users (
                        id             UUID PRIMARY KEY,
                        username       VARCHAR(100) NOT NULL UNIQUE,

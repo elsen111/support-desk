@@ -1,4 +1,3 @@
-// src/test/java/com/supportdesk/application/service/AddCommentServiceTest.java
 package com.supportdesk.application.service;
 
 import com.supportdesk.application.command.AddCommentCommand;

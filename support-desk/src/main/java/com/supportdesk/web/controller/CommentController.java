@@ -11,6 +11,7 @@ import com.supportdesk.web.dto.response.CommentResponse;
 import com.supportdesk.web.mapper.TicketWebMapper;
 import com.supportdesk.web.support.ActorResolver;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/tickets/{ticketId}/comments")
 @Tag(name = "Comments", description = "Collaborative comments scoped to a single ticket")
+@SecurityRequirement(name = "bearerAuth")
 public class CommentController {
 
     private final AddCommentUseCase addCommentUseCase;
@@ -39,6 +41,7 @@ public class CommentController {
                                                             @Valid @RequestBody AddCommentRequest request) {
         Actor actor = actorResolver.resolve(principal);
         Comment comment = addCommentUseCase.addComment(new AddCommentCommand(actor, ticketId, request.content()));
-        return ResponseEntity.status(201).body(ApiResponse.success(TicketWebMapper.toResponse(comment)));
+        return ResponseEntity.status(201).body(ApiResponse.success(TicketWebMapper.toResponse(comment),
+                "Comment has been successfully added."));
     }
 }

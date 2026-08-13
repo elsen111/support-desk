@@ -37,7 +37,7 @@ class JwtTokenProviderTest {
 
     @Test
     void rejectsExpiredToken() throws InterruptedException {
-        JwtTokenProvider provider = new JwtTokenProvider(SECRET, 1); // expires almost immediately
+        JwtTokenProvider provider = new JwtTokenProvider(SECRET, 1);
         String token = provider.generateToken(agentDetails("agent1"));
 
         Thread.sleep(15);

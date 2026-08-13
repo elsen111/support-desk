@@ -48,7 +48,7 @@ public class TicketEntity {
     private Long version;
 
     protected TicketEntity() {
-        // JPA
+
     }
 
     public TicketEntity(UUID id, String title, String description, PriorityJpa priority, StatusJpa status,
@@ -67,7 +67,6 @@ public class TicketEntity {
     public enum PriorityJpa { LOW, MEDIUM, HIGH, URGENT }
     public enum StatusJpa { OPEN, IN_PROGRESS, WAITING_CUSTOMER, RESOLVED, CLOSED }
 
-    // Getters / setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
     public String getTitle() { return title; }

@@ -34,6 +34,13 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.of(403, "FORBIDDEN", ex.getMessage(), request.getRequestURI()));
     }
 
+    @ExceptionHandler(UnauthorizedTicketOperationException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedOperation(UnauthorizedTicketOperationException ex, HttpServletRequest request) {
+        log.warn("Unauthorized operation: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ErrorResponse.of(403, "FORBIDDEN", ex.getMessage(), request.getRequestURI()));
+    }
+
     @ExceptionHandler(InvalidStatusTransitionException.class)
     public ResponseEntity<ErrorResponse> handleInvalidTransition(InvalidStatusTransitionException ex, HttpServletRequest request) {
         log.warn("Invalid transition: {}", ex.getMessage());
@@ -46,6 +53,13 @@ public class GlobalExceptionHandler {
         log.warn("Invalid data: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorResponse.of(400, "BAD_REQUEST", ex.getMessage(), request.getRequestURI()));
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidRefreshToken(InvalidRefreshTokenException ex, HttpServletRequest request) {
+        log.warn("Invalid refresh token: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorResponse.of(401, "UNAUTHORIZED", ex.getMessage(), request.getRequestURI()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
